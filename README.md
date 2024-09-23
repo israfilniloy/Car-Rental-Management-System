@@ -106,6 +106,29 @@ The system facilitates the management of car rentals, returns,car information,cu
    ```
 
 ## CRUD Operations:
+### For Login From:
+To validate user credentials and log in:
+```csharp
+private void button1_Click(object sender, EventArgs e)
+{
+    string query = "select count(*) from UTab where Uname= '" + Uname.Text + "' and Upass ='" + Upass.Text + "'";
+    con.Open();
+    SqlDataAdapter sda = new SqlDataAdapter(query, con);
+    DataTable dt = new DataTable();
+    sda.Fill(dt);
+    if (dt.Rows[0][0].ToString() == "1")
+    {
+        Mainfrom mainfrom = new Mainfrom();
+        mainfrom.Show();
+        this.Hide();
+    }
+    else
+    {
+        MessageBox.Show("Wrong Username or password");
+    }
+    con.Close();
+}
+```
 
 ### Insert Data:
 To insert a new rental record:
