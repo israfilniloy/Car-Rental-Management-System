@@ -129,7 +129,125 @@ private void button1_Click(object sender, EventArgs e)
     con.Close();
 }
 ```
-
+### For Users form:
+To Insert Data:
+```csharp
+ private void button1_Click(object sender, EventArgs e)
+        {
+            if (Uid.Text == "" || Uname.Text == "" || Upass.Text == "")
+            {
+                MessageBox.Show("Missing information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "insert into UTab (Id, Uname, Upass) values (@Id, @Uname, @Upass)";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", Uid.Text);
+                        cmd.Parameters.AddWithValue("@Uname", Uname.Text);
+                        cmd.Parameters.AddWithValue("@Upass", Upass.Text);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    MessageBox.Show("User Successfully Added");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error adding user: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+To Update Data:
+```csharp
+ private void button2_Click(object sender, EventArgs e)
+        {
+            if (Uid.Text == "" || Uname.Text == "" || Upass.Text == "")
+            {
+                MessageBox.Show("Missing information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "update UTab set Uname = @Uname, Upass = @Upass where Id = @Id";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Uname", Uname.Text);
+                        cmd.Parameters.AddWithValue("@Upass", Upass.Text);
+                        cmd.Parameters.AddWithValue("@Id", Uid.Text);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    con.Close();
+                    MessageBox.Show("User Updated Successfully");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error updating user: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+To Delete Data:
+```csharp
+ private void button3_Click(object sender, EventArgs e)
+        {
+            if (Uid.Text == "")
+            {
+                MessageBox.Show("Missing Information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "delete from UTab where Id = @Id";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Id", Uid.Text);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    MessageBox.Show("User Deleted Successfully");
+                    population();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting user: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+To Populate the data into DataGridView:
+```csharp
+private void population()
+        {
+            con.Open();
+            string query = "select * from UTab";
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            SqlCommandBuilder builder = new SqlCommandBuilder(da);
+            var ds = new DataSet();
+            da.Fill(ds);
+            UserDGV.DataSource = ds.Tables[0];
+            con.Close();
+        }
+```
 ### Insert Data:
 To insert a new rental record:
 ```csharp
