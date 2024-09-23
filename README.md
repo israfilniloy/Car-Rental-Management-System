@@ -530,8 +530,8 @@ To Delete Data:
         }
 ```
 ### For Rental From:
-  ```csharp
 To Fill Combo:
+  ```csharp
 private void fillcombo()
         {
             con.Open();
@@ -627,7 +627,7 @@ private void AddRental()
 }
 ```
 
-TO Update Data:
+To Update Data:
 To update a car rental record:
 ```csharp
 private void UpdateRental()
