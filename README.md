@@ -822,3 +822,7 @@ Users Interface:
 
 Car Interface:
 ![image](https://github.com/user-attachments/assets/a130b47b-78ed-417d-83f8-15527815db1c)
+
+Customer Interface:
+![image](https://github.com/user-attachments/assets/8af0c7c6-bff5-4927-8f52-9ffa58d455f6)
+
