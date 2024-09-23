@@ -234,6 +234,7 @@ To Delete Data:
             }
         }
 ```
+### Load Data:
 To Populate the data into DataGridView:
 ```csharp
 private void population()
@@ -248,6 +249,10 @@ private void population()
             con.Close();
         }
 ```
+
+### For Car From:
+
+
 ### Insert Data:
 To insert a new rental record:
 ```csharp
