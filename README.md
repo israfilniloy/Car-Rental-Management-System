@@ -130,7 +130,7 @@ private void button1_Click(object sender, EventArgs e)
 }
 ```
 ### For Users form:
-To Insert Data:
+### To Insert Data:
 ```csharp
  private void button1_Click(object sender, EventArgs e)
         {
@@ -165,7 +165,7 @@ To Insert Data:
             }
         }
 ```
-To Update Data:
+### To Update Data:
 ```csharp
  private void button2_Click(object sender, EventArgs e)
         {
@@ -200,7 +200,7 @@ To Update Data:
             }
         }
 ```
-To Delete Data:
+### To Delete Data:
 ```csharp
  private void button3_Click(object sender, EventArgs e)
         {
@@ -251,8 +251,162 @@ private void population()
 ```
 
 ### For Car From:
+### TO Insert Data:
+```csharp
+private void button1_Click(object sender, EventArgs e)
+        {
+            if (RegNumTb.Text == "" || BrandTb.Text == "" || ModelTb.Text == "" || PriceTb.Text == "" || Available.SelectedItem == null)
+            {
+                MessageBox.Show("Missing information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "INSERT INTO CarTb (RegNumTb, BrandTb, ModelTb, PriceTb, Available) VALUES (@RegNumTb, @BrandTb, @ModelTb, @PriceTb, @Available)";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@RegNumTb", RegNumTb.Text);
+                        cmd.Parameters.AddWithValue("@BrandTb", BrandTb.Text);
+                        cmd.Parameters.AddWithValue("@ModelTb", ModelTb.Text);
+                        cmd.Parameters.AddWithValue("@PriceTb", PriceTb.Text);
+                        cmd.Parameters.AddWithValue("@Available", Available.SelectedItem.ToString());
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    MessageBox.Show("Car Successfully Added");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error adding car: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+### TO Update Data:
+```csharp
+private void button2_Click(object sender, EventArgs e)
+        {
+            if (RegNumTb.Text == "" || BrandTb.Text == "" || ModelTb.Text == "" || PriceTb.Text == "" || Available.SelectedItem == null)
+            {
+                MessageBox.Show("Missing information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "update CarTb set BrandTb = @BrandTb, ModelTb = @ModelTb, PriceTb = @PriceTb where RegNumTb= @RegNumTb";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@RegNumTb", RegNumTb.Text);
+                        cmd.Parameters.AddWithValue("@BrandTb", BrandTb.Text);
+                        cmd.Parameters.AddWithValue("@ModelTb", ModelTb.Text);
+                        cmd.Parameters.AddWithValue("@PriceTb", PriceTb.Text);
+                        cmd.Parameters.AddWithValue("@Available", Available.SelectedItem.ToString());
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    con.Close();
+                    MessageBox.Show("Car Updated Successfully");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error updating Car: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+### To Delete Data:
+```csharp
+ private void button3_Click(object sender, EventArgs e)
+        {
+            if (RegNumTb.Text == "")
+            {
+                MessageBox.Show("Missing Information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "delete from CarTb where RegNumTb = @RegNumTb";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@RegNumTb", RegNumTb.Text);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    MessageBox.Show("Car Deleted Successfully");
+                    population();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting Car: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+### Load Data:
+```csharp
+ private void population()
+        {
+            con.Open();
+            string query = "select * from CarTb";
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            SqlCommandBuilder builder = new SqlCommandBuilder(da);
+            var ds = new DataSet();
+            da.Fill(ds);
+            CarDGV.DataSource = ds.Tables[0];
+            con.Close();
+        }
+```
+### To Search Data:
+```csharp
+private void search_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            string flag = "";
+            if (search.SelectedItem.ToString() == "Available")
+            {
+                flag = "Yes";
+            }
+            else
+            {
+                flag = "No";
+            }
 
-
+            try
+            {
+                con.Open();
+                string query = "SELECT * FROM CarTb WHERE Available = @flag";
+                SqlDataAdapter da = new SqlDataAdapter(query, con);
+                da.SelectCommand.Parameters.AddWithValue("@flag", flag);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                CarDGV.DataSource = ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+```
 ### Insert Data:
 To insert a new rental record:
 ```csharp
