@@ -826,3 +826,12 @@ Car Interface:
 Customer Interface:
 ![image](https://github.com/user-attachments/assets/8af0c7c6-bff5-4927-8f52-9ffa58d455f6)
 
+Rental Interface:
+![image](https://github.com/user-attachments/assets/a03c5fc6-5a87-43e3-a908-9ebcab48a7b7)
+
+Return Interface:
+![image](https://github.com/user-attachments/assets/36a802a0-74f5-4925-9634-4350776ee039)
+
+Dashboard Interface:
+![image](https://github.com/user-attachments/assets/491a8620-6221-4e56-a5cb-c890085630ba)
+
