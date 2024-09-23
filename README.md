@@ -130,7 +130,7 @@ private void button1_Click(object sender, EventArgs e)
 }
 ```
 ### For Users form:
-### To Insert Data:
+To Insert Data:
 ```csharp
  private void button1_Click(object sender, EventArgs e)
         {
@@ -165,7 +165,7 @@ private void button1_Click(object sender, EventArgs e)
             }
         }
 ```
-### To Update Data:
+To Update Data:
 ```csharp
  private void button2_Click(object sender, EventArgs e)
         {
@@ -200,7 +200,7 @@ private void button1_Click(object sender, EventArgs e)
             }
         }
 ```
-### To Delete Data:
+ To Delete Data:
 ```csharp
  private void button3_Click(object sender, EventArgs e)
         {
@@ -234,7 +234,7 @@ private void button1_Click(object sender, EventArgs e)
             }
         }
 ```
-### Load Data:
+Load Data:
 To Populate the data into DataGridView:
 ```csharp
 private void population()
@@ -251,7 +251,7 @@ private void population()
 ```
 
 ### For Car From:
-### TO Insert Data:
+TO Insert Data:
 ```csharp
 private void button1_Click(object sender, EventArgs e)
         {
@@ -288,7 +288,7 @@ private void button1_Click(object sender, EventArgs e)
             }
         }
 ```
-### TO Update Data:
+TO Update Data:
 ```csharp
 private void button2_Click(object sender, EventArgs e)
         {
@@ -325,7 +325,7 @@ private void button2_Click(object sender, EventArgs e)
             }
         }
 ```
-### To Delete Data:
+To Delete Data:
 ```csharp
  private void button3_Click(object sender, EventArgs e)
         {
@@ -359,7 +359,7 @@ private void button2_Click(object sender, EventArgs e)
             }
         }
 ```
-### Load Data:
+Load Data:
 ```csharp
  private void population()
         {
@@ -373,7 +373,7 @@ private void button2_Click(object sender, EventArgs e)
             con.Close();
         }
 ```
-### To Search Data:
+To Search Data:
 ```csharp
 private void search_SelectionChangeCommitted(object sender, EventArgs e)
         {
