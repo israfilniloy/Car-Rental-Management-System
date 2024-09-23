@@ -811,8 +811,11 @@ The **Dashboard** provides key statistics about the system:
 4. **Run the Application**: Manage rental records, return cars, and view statistics through the Windows Forms interface.
 
 ## Screenshots:
-Login From:
+Login Interface:
 ![image](https://github.com/user-attachments/assets/50572fd8-8b4a-4926-9965-536571218032)
 
-MainFrom:
+MainForm Interface:
 ![image](https://github.com/user-attachments/assets/ccfb6fb5-9521-488b-a8b2-486189fe447f)
+
+Car Interface:
+![image](https://github.com/user-attachments/assets/a130b47b-78ed-417d-83f8-15527815db1c)
