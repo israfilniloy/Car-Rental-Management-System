@@ -359,20 +359,6 @@ To Delete Data:
             }
         }
 ```
-Load Data:
-```csharp
- private void population()
-        {
-            con.Open();
-            string query = "select * from CarTb";
-            SqlDataAdapter da = new SqlDataAdapter(query, con);
-            SqlCommandBuilder builder = new SqlCommandBuilder(da);
-            var ds = new DataSet();
-            da.Fill(ds);
-            CarDGV.DataSource = ds.Tables[0];
-            con.Close();
-        }
-```
 To Search Data:
 ```csharp
 private void search_SelectionChangeCommitted(object sender, EventArgs e)
@@ -406,8 +392,221 @@ private void search_SelectionChangeCommitted(object sender, EventArgs e)
                 con.Close();
             }
         }
+   }
 ```
-### Insert Data:
+Load Data:
+```csharp
+ private void population()
+        {
+            con.Open();
+            string query = "select * from CarTb";
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            SqlCommandBuilder builder = new SqlCommandBuilder(da);
+            var ds = new DataSet();
+            da.Fill(ds);
+            CarDGV.DataSource = ds.Tables[0];
+            con.Close();
+        }
+```
+### For Customer From:
+To Insert Data:
+```csharp
+ private void button1_Click(object sender, EventArgs e)
+        {
+            if (IdTb.Text == "" || NameTb.Text == "" || AddressTb.Text == "" || PhoneTb.Text == "")
+            {
+                MessageBox.Show("Missing information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "INSERT INTO CustomerTab (IdTb, NameTb, AddressTb, PhoneTb) VALUES (@IdTb, @NameTb, @AddressTb, @PhoneTb)";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@IdTb", IdTb.Text);
+                        cmd.Parameters.AddWithValue("@NameTb", NameTb.Text);
+                        cmd.Parameters.AddWithValue("@AddressTb", AddressTb.Text);
+                        cmd.Parameters.AddWithValue("@PhoneTb", PhoneTb.Text);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    MessageBox.Show("Customer Successfully Added");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error adding Customer: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+To Update Data:
+```csharp
+private void button2_Click(object sender, EventArgs e)
+        {
+            if (IdTb.Text == "" || NameTb.Text == "" || AddressTb.Text == "" || PhoneTb.Text == "")
+            {
+                MessageBox.Show("Missing information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "update CustomerTab set NameTb = @NameTb, AddressTb = @AddressTb, PhoneTb = @PhoneTb where IdTb = @IdTb";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@IdTb", IdTb.Text);
+                        cmd.Parameters.AddWithValue("@NameTb", NameTb.Text);
+                        cmd.Parameters.AddWithValue("@AddressTb", AddressTb.Text);
+                        cmd.Parameters.AddWithValue("@PhoneTb", PhoneTb.Text);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    MessageBox.Show("Customer Updated Successfully");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error Updating Customer: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+To Delete Data:
+```csharp
+ private void button3_Click(object sender, EventArgs e)
+        {
+            if (IdTb.Text == "")
+            {
+                MessageBox.Show("Missing Information");
+            }
+            else
+            {
+                try
+                {
+                    string query = "delete from CustomerTab where IdTb = @IdTb";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@IdTb", IdTb.Text);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    MessageBox.Show("Customer Deleted Successfully");
+                    population();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting Customer: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+  Load Data:
+  ```csharp
+   private void population()
+        {
+            con.Open();
+            string query = "select * from CustomerTab";
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            SqlCommandBuilder builder = new SqlCommandBuilder(da);
+            var ds = new DataSet();
+            da.Fill(ds);
+            CustomerDGV.DataSource = ds.Tables[0];
+            con.Close();
+        }
+```
+### For Rental From:
+  ```csharp
+To Fill Combo:
+private void fillcombo()
+        {
+            con.Open();
+            string query = "select RegNumTb from CarTb";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader rdr;
+            rdr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("RegNumTb", typeof(string));
+            dt.Load(rdr);
+            CarReg.ValueMember = "RegNumTb";
+            CarReg.DataSource = dt;
+            con.Close();
+        }
+  ```
+  To FillCustomer:
+   ```csharp
+   private void fillCustomer() 
+        {
+            con.Open();
+            string query = "select IdTb from CustomerTab";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader rdr;
+            rdr = cmd.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("IdTb", typeof(int));
+            dt.Load(rdr);
+            CustCb.ValueMember = "IdTb";
+            CustCb.DataSource = dt;
+            con.Close();
+        }
+  ```
+  To UpdateRent:
+  ```csharp
+   private void updateRent()
+        {
+            try
+            {
+                string query = "UPDATE CarTb SET Available = @Available WHERE RegNumTb = @RegNum";
+                using (SqlConnection con = new SqlConnection("Data Source=NILOY\\SQLEXPRESS02;Integrated Security=True"))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@Available", "NO");
+                        cmd.Parameters.AddWithValue("@RegNum", CarReg.SelectedValue.ToString());
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+        }
+  ```
+To BaringCustomer:
+  ```csharp
+private void BringCustName()
+        {
+            con.Open();
+            string query = "select NameTb from CustomerTab where IdTb = @IdTb";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@IdTb", CustCb.SelectedValue);
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);    
+            foreach(DataRow dr in dt.Rows)
+            {
+                CustName.Text = dr["NameTb"].ToString();
+            }
+            con.Close();
+        }
+  ```
+To Insert Data:
 To insert a new rental record:
 ```csharp
 private void AddRental()
@@ -428,7 +627,7 @@ private void AddRental()
 }
 ```
 
-### Update Data:
+TO Update Data:
 To update a car rental record:
 ```csharp
 private void UpdateRental()
@@ -448,8 +647,7 @@ private void UpdateRental()
     }
 }
 ```
-
-### Delete Data:
+To Delete Data:
 To delete a car rental record:
 ```csharp
 private void DeleteRental()
@@ -465,8 +663,7 @@ private void DeleteRental()
     }
 }
 ```
-
-### Load Data:
+To Load Data:
 To load the rental records into a `DataGridView`:
 ```csharp
 private void LoadRentals()
@@ -481,7 +678,118 @@ private void LoadRentals()
     }
 }
 ```
+### For Return From:
+To Insert Data:
+```csharp
+ private void button1_Click(object sender, EventArgs e)
+        {
+            if (ReturnId.Text == "" || CarReg.Text == "" || CustName.Text == "")
+            {
+                MessageBox.Show("Missing information");
+            }
+            else
+            {
+                try
+                {
+                    if (!DateTime.TryParse(ReturnDate.Text, out DateTime returnDate))
+                    {
+                        MessageBox.Show("Please enter valid dates.");
+                        return;
+                    }
 
+                    string query = "INSERT INTO ReturnTab (ReturnId, CarReg, CustName, ReturnDate) VALUES (@ReturnId, @CarReg, @CustName, @ReturnDate)";
+
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@ReturnId", ReturnId.Text);
+                        cmd.Parameters.AddWithValue("@CustName", CustName.Text);
+                        cmd.Parameters.AddWithValue("@ReturnDate", returnDate);
+                        cmd.Parameters.AddWithValue("@CarReg", CarReg.Text);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+
+                        populationReturn();
+                    }
+
+                    MessageBox.Show("Car Successfully Returned");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error Returning Car: " + ex.Message);
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+        }
+```
+To Delete Data:
+```csharp
+ private void button3_Click(object sender, EventArgs e)
+        {
+            if (ReturnId.Text == "")
+            {
+                MessageBox.Show("Missing Information");
+                return;
+            }
+
+            try
+            {
+                string query = "DELETE FROM ReturnTab WHERE ReturnId = @ReturnId";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@ReturnId", ReturnId.Text);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+
+                MessageBox.Show("Car Deleted Successfully");
+                population();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting Car: " + ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+```
+Load Data:
+```csharp
+From Rental load data:
+ private void population()
+        {
+            con.Open();
+            string query = "select * from RentalTab";
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            SqlCommandBuilder builder = new SqlCommandBuilder(da);
+            var ds = new DataSet();
+            da.Fill(ds);
+            RentalDGV.DataSource = ds.Tables[0];
+            con.Close();
+```
+ for Return load data:
+  ```csharp
+    private void populationReturn()
+        {
+            con.Open();
+            string query = "select * from ReturnTab";
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+            SqlCommandBuilder builder = new SqlCommandBuilder(da);
+            var ds = new DataSet();
+            da.Fill(ds);
+            ReturnDGV.DataSource = ds.Tables[0];
+            con.Close();
+        }
+```
 ## Dashboard:
 The **Dashboard** provides key statistics about the system:
 - **Total Cars**: Displays the count of records in the `CarTb` table.
